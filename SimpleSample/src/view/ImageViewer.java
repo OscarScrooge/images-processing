@@ -39,18 +39,18 @@ public class ImageViewer extends javax.swing.JFrame {
         
         Mat myImage= new Mat(1419,389, CvType.CV_8UC3);
         
-        for(int i=0;i<myImage.rows();i++){
-            for(int j=0;j<myImage.cols();j++){
-                int n1= (int) (Math.random()*255);
-                int n2= (int) (Math.random()*255);
-                int n3= (int) (Math.random()*255);
-//                System.err.println("n1="+n1+" n2="+n2+" n3="+n3);
-                myImage.put(i, j, new double[]{n1,n2,n3});
-            }
-        }
+//        for(int i=0;i<myImage.rows();i++){
+//            for(int j=0;j<myImage.cols();j++){
+//                int n1= (int) (Math.random()*255);
+//                int n2= (int) (Math.random()*255);
+//                int n3= (int) (Math.random()*255);
+////                System.err.println("n1="+n1+" n2="+n2+" n3="+n3);
+//                myImage.put(i, j, new double[]{n1,n2,n3});
+//            }
+//        }
         
-//        Image loadedImage = toBufferedImage(this.image);        
-        Image loadedImage = toBufferedImage(myImage);        
+        Image loadedImage = toBufferedImage(this.image);        
+//        Image loadedImage = toBufferedImage(myImage);        
         showImage.setIcon(new ImageIcon(loadedImage));
         ImageProcessor imageProcessor = new ImageProcessor();
 
@@ -308,7 +308,7 @@ public class ImageViewer extends javax.swing.JFrame {
         double noise = 128;
         grayRnd.setTo(new Scalar(noise / 2, noise / 2, noise / 2));
         Core.subtract(this.image, grayRnd,this.image);
-        Core.randu(grayRnd, 0, noise);
+        Core.randu(grayRnd, 10, noise);
         Core.add(this.image, grayRnd,this.image);  
 //        this.image=grayRnd;
         Image newImage = toBufferedImage(grayRnd);         

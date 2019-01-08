@@ -51,6 +51,7 @@ public class ImageViewer extends javax.swing.JFrame {
         Image loadedImage = toBufferedImage(this.image);        
 //        Image loadedImage = toBufferedImage(myImage);        
         showImage.setIcon(new ImageIcon(loadedImage));
+        this.imageAux=this.image;
         ImageProcessor imageProcessor = new ImageProcessor();
 
     }
@@ -92,6 +93,8 @@ public class ImageViewer extends javax.swing.JFrame {
         jRadioButton_Dilate = new javax.swing.JRadioButton();
         jRadioButton_Open = new javax.swing.JRadioButton();
         jRadioButton_Close = new javax.swing.JRadioButton();
+        jRadioButton_Add_Noise = new javax.swing.JRadioButton();
+        jPanel_Image = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,6 +176,24 @@ public class ImageViewer extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton_Add_Noise.setText("Add Noise");
+        jRadioButton_Add_Noise.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton_Add_NoiseActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_ImageLayout = new javax.swing.GroupLayout(jPanel_Image);
+        jPanel_Image.setLayout(jPanel_ImageLayout);
+        jPanel_ImageLayout.setHorizontalGroup(
+            jPanel_ImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel_ImageLayout.setVerticalGroup(
+            jPanel_ImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,11 +202,13 @@ public class ImageViewer extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
-                        .addComponent(showImage, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(showImage, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel_Image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(240, 240, 240)
                         .addComponent(setupButton)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jRadioButton_Erode)
@@ -195,7 +218,9 @@ public class ImageViewer extends javax.swing.JFrame {
                 .addComponent(jRadioButton_Open)
                 .addGap(45, 45, 45)
                 .addComponent(jRadioButton_Close)
-                .addGap(134, 134, 134))
+                .addGap(18, 18, 18)
+                .addComponent(jRadioButton_Add_Noise)
+                .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,7 +242,9 @@ public class ImageViewer extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton_Close, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButton_Close)
+                        .addComponent(jRadioButton_Add_Noise))
                     .addComponent(jRadioButton_Open, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton_Dilate)
@@ -237,8 +264,13 @@ public class ImageViewer extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton2)
                         .addComponent(jRadioButton3)))
-                .addGap(13, 13, 13)
-                .addComponent(showImage, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(showImage, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jPanel_Image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(setupButton)
                 .addContainerGap())
@@ -267,6 +299,7 @@ public class ImageViewer extends javax.swing.JFrame {
 
     private void setupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupButtonActionPerformed
         // TODO add your handling code here:
+        this.image=this.imageAux;
         Image originalImage = toBufferedImage(this.image);
         showImage.setIcon(new ImageIcon(originalImage));
     }//GEN-LAST:event_setupButtonActionPerformed
@@ -305,7 +338,9 @@ public class ImageViewer extends javax.swing.JFrame {
          Mat outputImage = new Mat();
         Mat element = getKernelFromShape(kernelSize, this.shape);
         Imgproc.dilate(this.image, outputImage, element);
-        Image newImage = toBufferedImage(outputImage);
+        this.image=outputImage;
+//        Image newImage = toBufferedImage(outputImage);
+        Image newImage = toBufferedImage(this.image);
             showImage.setIcon(new ImageIcon(newImage));
     }//GEN-LAST:event_jRadioButton_DilateActionPerformed
 
@@ -327,19 +362,25 @@ public class ImageViewer extends javax.swing.JFrame {
             showImage.setIcon(new ImageIcon(newImage));
     }//GEN-LAST:event_jRadioButton_CloseActionPerformed
 
+    private void jRadioButton_Add_NoiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_Add_NoiseActionPerformed
+        // TODO add your handling code here:
+        this.addNoise();
+    }//GEN-LAST:event_jRadioButton_Add_NoiseActionPerformed
+
     private void addNoise() {
         
         Mat grayRnd = new Mat(this.image.rows(),this.image.cols(),this.image.type());
+        System.out.println(""+grayRnd);
         double noise = 128;
         grayRnd.setTo(new Scalar(noise / 2, noise / 2, noise / 2));
         Core.subtract(this.image, grayRnd,this.image);
         Core.randu(grayRnd, 10, noise);
         Core.add(this.image, grayRnd,this.image);  
-//        this.image=grayRnd;
-        Image newImage = toBufferedImage(grayRnd);         
-//        Image newImage = toBufferedImage(this.image);         
-        showImage.setIcon(new ImageIcon(newImage));
-        
+        this.image=grayRnd;
+//        Image newImage = toBufferedImage(grayRnd);                
+//        Image newImage = toBufferedImage(this.image);
+//        showImage.setIcon(new ImageIcon(newImage));
+
     }
 
     /**
@@ -381,9 +422,11 @@ public class ImageViewer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel_Image;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton_Add_Noise;
     private javax.swing.JRadioButton jRadioButton_Close;
     private javax.swing.JRadioButton jRadioButton_Dilate;
     private javax.swing.JRadioButton jRadioButton_Erode;
@@ -396,5 +439,5 @@ public class ImageViewer extends javax.swing.JFrame {
    private int kernelSize=0;
    private int shape=0;
    private Mat image;
-
+   private Mat imageAux;
 }

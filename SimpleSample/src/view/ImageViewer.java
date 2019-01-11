@@ -38,7 +38,7 @@ public class ImageViewer extends javax.swing.JFrame {
         this.image = image;
         
 //        Mat myImage= new Mat(1419,389, CvType.CV_8UC3);
-        
+//        
 //        for(int i=0;i<myImage.rows();i++){
 //            for(int j=0;j<myImage.cols();j++){
 //                int n1= (int) (Math.random()*255);

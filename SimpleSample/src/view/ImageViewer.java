@@ -37,8 +37,8 @@ public class ImageViewer extends javax.swing.JFrame {
 
         this.image = image;
         
-        Mat myImage= new Mat(1419,389, CvType.CV_8UC3);
-        
+//        Mat myImage= new Mat(1419,389, CvType.CV_8UC3);
+//        
 //        for(int i=0;i<myImage.rows();i++){
 //            for(int j=0;j<myImage.cols();j++){
 //                int n1= (int) (Math.random()*255);
@@ -49,10 +49,8 @@ public class ImageViewer extends javax.swing.JFrame {
 //            }
 //        }
         
-        Image loadedImage = toBufferedImage(this.image);        
-//        Image loadedImage = toBufferedImage(myImage);        
-        showImage.setIcon(new ImageIcon(loadedImage));
-        ImageProcessor imageProcessor = new ImageProcessor();
+        setImage(this.image);
+        ImageProcessor imageProcessor = new ImageProcessor();   
 
     }
 
@@ -220,8 +218,7 @@ public class ImageViewer extends javax.swing.JFrame {
         int level = (int) source.getValue();
         ImageProcessor imageProcessor = new ImageProcessor();        
         Mat output = imageProcessor.blur(this.image, level);
-        Image loadedImage = toBufferedImage(output);
-        showImage.setIcon(new ImageIcon(loadedImage));
+        setImage(output);
 //        this.repaint();
     }//GEN-LAST:event_sliderLabelStateChanged
 
@@ -229,8 +226,7 @@ public class ImageViewer extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         Imgproc.circle(image, new Point(evt.getX(), evt.getY()), 20, new Scalar(0, 0, 255), 4);
-        Image loadedImage = toBufferedImage(image);
-        showImage.setIcon(new ImageIcon(loadedImage));
+        setImage(image);
 //        this.repaint();
 
     }//GEN-LAST:event_showImageMousePressed
@@ -238,17 +234,14 @@ public class ImageViewer extends javax.swing.JFrame {
     private void setupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setupButtonActionPerformed
         // TODO add your handling code here:
         Image originalImage = toBufferedImage(this.image);
-        showImage.setIcon(new ImageIcon(originalImage));
+              showImage.setIcon(new ImageIcon(originalImage.getScaledInstance(this.showImage.getWidth(),this.showImage.getHeight(), Image.SCALE_DEFAULT)));
     }//GEN-LAST:event_setupButtonActionPerformed
 
     private void jRadioButton_BlurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_BlurActionPerformed
         // TODO add your handling code here: 
         Mat des = new Mat();
         Imgproc.blur(this.image, des, new Size(10.0, 10.0), new Point(4, 5), BORDER_REFLECT_101);        
-//        this.image=des;
-        Image newImage = toBufferedImage(des);
-//        Image newImage = toBufferedImage(this.image);
-        showImage.setIcon(new ImageIcon(newImage));
+        setImage(des);
     }//GEN-LAST:event_jRadioButton_BlurActionPerformed
 
     private void jRadioButton_GaussianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_GaussianActionPerformed
@@ -256,8 +249,7 @@ public class ImageViewer extends javax.swing.JFrame {
         Mat des = new Mat();
 //        double sigma = 0.3*((new Size(3.0, 3.0-1)*0.5 - 1) + 0.8;
         Imgproc.GaussianBlur(this.image, des, new Size(3.0, 3.0),0);
-        Image newImage = toBufferedImage(des);
-        showImage.setIcon(new ImageIcon(newImage));
+        setImage(des);
     }//GEN-LAST:event_jRadioButton_GaussianActionPerformed
 
     private void jRadioButton_MedianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_MedianActionPerformed
@@ -265,8 +257,7 @@ public class ImageViewer extends javax.swing.JFrame {
         Mat des = new Mat();
 //        double sigma = 0.3*((new Size(3.0, 3.0-1)*0.5 - 1) + 0.8;
         Imgproc.medianBlur(this.image, des,5);
-        Image newImage = toBufferedImage(des);
-        showImage.setIcon(new ImageIcon(newImage));
+        setImage(des);
     }//GEN-LAST:event_jRadioButton_MedianActionPerformed
 
     private void jRadioButton_BilateralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_BilateralActionPerformed
@@ -274,8 +265,7 @@ public class ImageViewer extends javax.swing.JFrame {
          Mat des = new Mat();
 //        double sigma = 0.3*((new Size(3.0, 3.0-1)*0.5 - 1) + 0.8;
         Imgproc.bilateralFilter(this.image, des,20,15.0,50);
-        Image newImage = toBufferedImage(des);
-        showImage.setIcon(new ImageIcon(newImage));
+        setImage(des);
     }//GEN-LAST:event_jRadioButton_BilateralActionPerformed
 
     private void pix_manipulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pix_manipulationActionPerformed
@@ -292,9 +282,8 @@ public class ImageViewer extends javax.swing.JFrame {
             }
         }
         image.put(0, 0, buffer);
-        Image newImage = toBufferedImage(image);
-        showImage.setIcon(new ImageIcon(newImage));
-
+        
+        setImage(this.image);        
     }//GEN-LAST:event_pix_manipulationActionPerformed
 
     private void addNoiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNoiseActionPerformed
@@ -310,11 +299,15 @@ public class ImageViewer extends javax.swing.JFrame {
         Core.subtract(this.image, grayRnd,this.image);
         Core.randu(grayRnd, 10, noise);
         Core.add(this.image, grayRnd,this.image);  
-//        this.image=grayRnd;
-        Image newImage = toBufferedImage(grayRnd);         
-//        Image newImage = toBufferedImage(this.image);         
-        showImage.setIcon(new ImageIcon(newImage));
         
+        setImage(grayRnd);
+    }
+    
+    private void setImage(Mat customImage){
+    
+              Image loadedImage = toBufferedImage(customImage);        
+              showImage.setIcon(new ImageIcon(loadedImage.getScaledInstance(this.showImage.getWidth(),this.showImage.getHeight(), Image.SCALE_DEFAULT)));
+    
     }
 
     /**

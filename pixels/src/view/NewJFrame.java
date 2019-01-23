@@ -32,8 +32,8 @@ public class NewJFrame extends javax.swing.JFrame {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         initComponents();
-        selectImage();
-//        createImagePixelsOriginal();
+//        selectImage();
+        createImagePixelsOriginal();
     }
 
     private void selectImage() {
@@ -52,24 +52,47 @@ public class NewJFrame extends javax.swing.JFrame {
 
     }
 
+//    private void createImagePixelsOriginal() {
+//
+//        Mat myImage = new Mat(1419, 389, CvType.CV_8UC3);
+//
+//        for (int i = 0; i < myImage.rows(); i++) {
+//            for (int j = 0; j < myImage.cols(); j++) {
+//                int n1 = (int) (Math.random() * 255);
+//                int n2 = (int) (Math.random() * 255);
+//                int n3 = (int) (Math.random() * 255);
+////                System.err.println("n1="+n1+" n2="+n2+" n3="+n3);
+//                myImage.put(i, j, new double[]{n1, n2, n3});
+//            }
+//        }
+//
+//        setImage1(myImage);
+//        imageAux = myImage;
+//    }
+
     private void createImagePixelsOriginal() {
 
         Mat myImage = new Mat(1419, 389, CvType.CV_8UC3);
-
+        double bit=0.0;
         for (int i = 0; i < myImage.rows(); i++) {
             for (int j = 0; j < myImage.cols(); j++) {
                 int n1 = (int) (Math.random() * 255);
                 int n2 = (int) (Math.random() * 255);
                 int n3 = (int) (Math.random() * 255);
 //                System.err.println("n1="+n1+" n2="+n2+" n3="+n3);
-                myImage.put(i, j, new double[]{n1, n2, n3});
+                myImage.put(i, j, new double[]{n1,n2,n3});                
+//                myImage.put(i, j, new double[]{bit,bit,bit});
+//                if(bit==0.0){
+//                   bit=255.0;
+//                }else{
+//                   bit=0.0;
+//                }
             }
         }
 
         setImage1(myImage);
         imageAux = myImage;
     }
-
     private void setImage1(Mat image) {
         Image loadedImage = toBufferedImage(image);
         jLabel_showImage1.setIcon(new ImageIcon(loadedImage.getScaledInstance(this.jLabel_showImage1.getWidth(), this.jLabel_showImage1.getHeight(), Image.SCALE_DEFAULT)));
@@ -189,6 +212,9 @@ public class NewJFrame extends javax.swing.JFrame {
         int type = BufferedImage.TYPE_BYTE_GRAY;
         if (matrix.channels() > 1) {
             type = BufferedImage.TYPE_3BYTE_BGR;
+        }
+        if (matrix.channels() > 3) {
+            type = BufferedImage.TYPE_4BYTE_ABGR;
         }
         int bufferSize = matrix.channels() * matrix.cols() * matrix.rows();
         byte[] buffer = new byte[bufferSize];

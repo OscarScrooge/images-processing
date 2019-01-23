@@ -7,6 +7,7 @@ package Control;
 
 import javafx.scene.input.DataFormat;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 /**
  *
@@ -20,8 +21,9 @@ public class Desenfoque {
     public Mat aplicaMascara(Mat originalImage) {
         
         int con=1;
-        Mat newImage = originalImage;
-        
+        Mat newImage = new Mat();
+        newImage=originalImage.clone();
+                
         System.out.println("cols= " +originalImage.cols());
         System.out.println("rows= " +originalImage.rows());
         double[] rgb1, rgb2, rgb3, rgb4, rgb5, rgb6, rgb7, rgb8, rgb9;
@@ -69,7 +71,7 @@ public class Desenfoque {
                        r=rgb1[0]/9+rgb2[0]/9+rgb3[0]/9+rgb4[0]/9+rgb5[0]/9+rgb6[0]/9+rgb7[0]/9+rgb8[0]/9+rgb9[0]/9;
                        g=rgb1[1]/9+rgb2[1]/9+rgb3[1]/9+rgb4[1]/9+rgb5[1]/9+rgb6[1]/9+rgb7[1]/9+rgb8[1]/9+rgb9[1]/9;
                        b=rgb1[2]/9+rgb2[2]/9+rgb3[2]/9+rgb4[2]/9+rgb5[2]/9+rgb6[2]/9+rgb7[2]/9+rgb8[2]/9+rgb9[2]/9;
-                       
+//                       
 //                       r=rgb1[0]*-2+rgb2[0]*-1+rgb3[0]*0+rgb4[0]*-1+rgb5[0]*1+rgb6[0]*1+rgb7[0]*0+rgb8[0]*1+rgb9[0]*2;
 //                       g=rgb1[1]*-2+rgb2[1]*-1+rgb3[1]*-0+rgb4[1]*-1+rgb5[1]*1+rgb6[1]*1+rgb7[1]*0+rgb8[1]*1+rgb9[1]*2;
 //                       b=rgb1[2]*-2+rgb2[2]*-1+rgb3[2]*0+rgb4[2]*-1+rgb5[2]*1+rgb6[2]*1+rgb7[2]*0+rgb8[2]*1+rgb9[2]*2;
@@ -84,6 +86,7 @@ public class Desenfoque {
             }
         }
         
+//        Imgproc.Laplacian(originalImage,newImage,-1);
         return newImage;
     }
     
@@ -92,9 +95,9 @@ public class Desenfoque {
         
         vectorNull= new double[3];
         
-          vectorNull[0]=0;
-          vectorNull[1]=0;
-          vectorNull[2]=0;
+          vectorNull[0]=-1;
+          vectorNull[1]=-1;
+          vectorNull[2]=-1;
           
           return vectorNull;
     }

@@ -16,18 +16,18 @@ public class CalcularHistograma {
     Mat image;
     int contRojos=0;
     double[][] frecuencias;
-     double[] frecuencias2;
-     double[] frecuencias3;
-     double[] frecuencias4;
+     double[] frecuenciasB;
+     double[] frecuenciasG;
+     double[] frecuenciasR;
     public CalcularHistograma() {    
         
     }
     
     public CalcularHistograma(Mat image) {
         this.image=image;
-        frecuencias2= new double[image.cols()*image.rows()];
-         frecuencias3= new double[image.cols()*image.rows()];
-          frecuencias4= new double[image.cols()*image.rows()];
+        frecuenciasB= new double[image.cols()*image.rows()];
+         frecuenciasG= new double[image.cols()*image.rows()];
+          frecuenciasR= new double[image.cols()*image.rows()];
         recorreImagen(image,llenaColores(image));
     }
     
@@ -38,9 +38,9 @@ public class CalcularHistograma {
         
         for(i=0;i<image.rows();i++){
           for(j=0;j<image.cols();j++){
-              frecuencias2[cont]=image.get(i, j)[0];
-              frecuencias3[cont]=image.get(i, j)[1];
-              frecuencias4[cont]=image.get(i, j)[2];
+              frecuenciasB[cont]=image.get(i, j)[0];
+              frecuenciasG[cont]=image.get(i, j)[1];
+              frecuenciasR[cont]=image.get(i, j)[2];
               cont++;              
               colores=cuentaColor(image.get(i, j),colores);              
           }
@@ -96,13 +96,13 @@ public class CalcularHistograma {
     }
     
     public double[] getFrecuencias(){
-       return this.frecuencias2;
+       return this.frecuenciasB;
     }
      public double[] getFrecuencias2(){
-       return this.frecuencias3;
+       return this.frecuenciasG;
     }
       public double[] getFrecuencias3(){
-       return this.frecuencias4;
+       return this.frecuenciasR;
     }
     
 }

@@ -16,7 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 /**
  *
@@ -57,6 +59,7 @@ public class ImageViewer extends javax.swing.JFrame {
     }
 
     private void setImage2(Mat image) {
+        
         Image loadedImage = toBufferedImage(image);
         jLabel_showImage2.setIcon(new ImageIcon(loadedImage.getScaledInstance(this.jLabel_showImage2.getWidth(), this.jLabel_showImage2.getHeight(), Image.SCALE_DEFAULT)));
     }
@@ -112,11 +115,12 @@ public class ImageViewer extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel_showImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
+                        .addGap(183, 183, 183)
                         .addComponent(jLabel_showImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,12 +129,9 @@ public class ImageViewer extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel_showImage2, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-                        .addGap(28, 28, 28))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel_showImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jLabel_showImage2, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                    .addComponent(jLabel_showImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -140,6 +141,10 @@ public class ImageViewer extends javax.swing.JFrame {
         // TODO add your handling code here:
         Desenfoque des =  new Desenfoque();
         setImage2(des.aplicaMascara(imageAux));        
+//          Mat des = new Mat();
+////        double sigma = 0.3*((new Size(3.0, 3.0-1)*0.5 - 1) + 0.8;
+//          Imgproc.GaussianBlur(this.imageAux, des, new Size(3.0, 3.0),0);
+//          setImage2(des);  
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

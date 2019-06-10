@@ -32,8 +32,8 @@ public class NewJFrame extends javax.swing.JFrame {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
         initComponents();
-//        selectImage();
-        createImagePixelsOriginal();
+        selectImage();
+       // createImagePixelsOriginal();
     }
 
     private void selectImage() {
@@ -113,6 +113,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     newSpec[1] = newSpec[1] + specValue;
                     newSpec[2] = newSpec[2] + specValue;
                     image.put(i, j, newSpec);
+                    System.err.println("n1="+newSpec[0]+" n2="+newSpec[1]+" n3="+newSpec[2]);
                 }
             }
       

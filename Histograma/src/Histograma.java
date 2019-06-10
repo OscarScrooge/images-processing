@@ -39,7 +39,7 @@ public class Histograma extends javax.swing.JFrame {
         chooser.showDialog(null, null);
 
         File selectedFile = chooser.getSelectedFile();
-
+        System.err.println(selectedFile.getPath());
         try {
             Mat newImage = Imgcodecs.imread(selectedFile.getPath());
             System.out.println("Tipo de imagen: "+newImage);
